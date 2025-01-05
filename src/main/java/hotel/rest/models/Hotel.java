@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 public class Hotel{
 	
 	// Attribut//
+	
 	@Id
 	@GeneratedValue
 	private long id;
