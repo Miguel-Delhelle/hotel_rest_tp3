@@ -1,4 +1,4 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,11 +6,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import hotel.rest.models.Hotel;
+import hotel.rest.common.MDMethod;
+import hotel.rest.common.Reservation;
+import hotel.rest.common.TypeChambre;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+@Entity
 public class Chambre {
 
 	// Attributs//
+	
+	@Id
+	@GeneratedValue
 	private int numeroChambre;
 	private int nombreLit;
 	private double prix;
@@ -20,6 +29,13 @@ public class Chambre {
 	private Reservation reservation;
 	
 	// Constructeurs
+	
+	public Chambre (TypeChambre typeChambre) {
+		this.nombreLit = typeChambre.getNombreLit();
+		this.prix = typeChambre.getPrix();
+		this.disponibilite = this.setDisponibiliteInitial();
+		this.typeChambre = typeChambre;
+	}
 	
 	public Chambre(int numeroChambre, int nombreLit, double prix, Hotel hotel) {
 		super();

@@ -1,0 +1,4 @@
+-- Avoir un fichier client
+-- Un fichier réservation
+-- Une base de données des chambres
+-- Réservation étant la classe d'association

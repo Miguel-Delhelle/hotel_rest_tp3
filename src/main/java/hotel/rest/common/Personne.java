@@ -2,6 +2,7 @@ package hotel.rest.common;
 
 import java.time.LocalDate;
 
+import hotel.rest.models.Chambre;
 import hotel.rest.models.Hotel;
 
 public class Personne {

@@ -5,16 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hotel.rest.common.Adresse;
-import hotel.rest.common.Chambre;
 import hotel.rest.common.MDMethod;
 import hotel.rest.common.Personne;
 import hotel.rest.common.Reservation;
 import hotel.rest.common.TypeChambre;
 import hotel.rest.exception.ChambreNonDisponibleException;
 import hotel.rest.exception.ReservationFailedException;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@Entity
 public class Hotel{
 	
 	// Attribut//

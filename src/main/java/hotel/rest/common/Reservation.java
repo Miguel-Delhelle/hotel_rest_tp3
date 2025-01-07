@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import hotel.rest.models.Chambre;
 import hotel.rest.models.Hotel;
 
 public class Reservation { //Class associative
