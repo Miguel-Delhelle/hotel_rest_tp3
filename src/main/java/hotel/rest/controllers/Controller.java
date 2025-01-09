@@ -11,7 +11,7 @@ import hotel.rest.models.Chambre;
 import hotel.rest.repositories.ChambreRepository;
 
 @RestController
-@RequestMapping("/allChambre")
+@RequestMapping("/Hotel")
 public class Controller {
 
 	@Autowired

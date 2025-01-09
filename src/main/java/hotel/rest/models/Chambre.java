@@ -36,6 +36,7 @@ public class Chambre {
 	
 	@Transient
 	private HashMap <LocalDate, String> disponibilite;
+	
 	@OneToOne
 	private Reservation reservation;
 	
