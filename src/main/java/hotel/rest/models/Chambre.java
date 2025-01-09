@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import hotel.rest.common.Hotel;
@@ -16,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 
 @Entity
 public class Chambre {
@@ -34,8 +34,7 @@ public class Chambre {
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
 	
-	@Transient
-	private HashMap <LocalDate, String> disponibilite;
+	private List <LocalDate> dateReservee = new ArrayList <LocalDate>();
 	
 	@OneToOne
 	private Reservation reservation;
@@ -45,7 +44,7 @@ public class Chambre {
 	public Chambre (TypeChambre typeChambre) {
 		this.nombreLit = typeChambre.getNombreLit();
 		this.prix = typeChambre.getPrix();
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 		this.typeChambre = typeChambre;
 	}
 	
@@ -55,7 +54,7 @@ public class Chambre {
 		this.nombreLit = nombreLit;
 		this.prix = prix;
 		this.hotel = hotel;
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 		this.typeChambre = TypeChambre.SIMPLE;
 	}
 	public Chambre(long numeroChambre, int nombreLit, double prix, Hotel hotel, TypeChambre typeChambre) {
@@ -64,7 +63,7 @@ public class Chambre {
 		this.nombreLit = nombreLit;
 		this.prix = prix;
 		this.hotel = hotel;
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 		this.typeChambre = typeChambre;
 	}
 	public Chambre(long numeroChambre, int nombreLit, double prix) {
@@ -72,7 +71,7 @@ public class Chambre {
 		this.id = numeroChambre;
 		this.nombreLit = nombreLit;
 		this.prix = prix;
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 	}
 	public Chambre(long numeroChambre, Hotel hotel, TypeChambre typeChambre) {
 		super();
@@ -80,12 +79,12 @@ public class Chambre {
 		this.nombreLit = typeChambre.getNombreLit();
 		this.prix = typeChambre.getPrix();
 		this.hotel = hotel;
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 		this.typeChambre = typeChambre;
 	}
 	public Chambre() {
 		super();
-		this.disponibilite = this.setDisponibiliteInitial();
+		// this.dateReservee = this.setDisponibiliteInitial();
 	}
 	// Accesseurs //
 	
@@ -120,8 +119,8 @@ public class Chambre {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-	public void setDisponibilite(HashMap<LocalDate, String> disponibilite) {
-		this.disponibilite = disponibilite;
+	public void setDisponibilite(List<LocalDate> disponibilite) {
+		this.dateReservee = disponibilite;
 	}
 	
 	public TypeChambre getTypeChambre() {
@@ -136,10 +135,11 @@ public class Chambre {
 	
 	
 
-	public HashMap<LocalDate, String> getDisponibilite() {
-		return disponibilite;
+	public List<LocalDate> getDateReservee() {
+		return dateReservee;
 	}
-	public HashMap <LocalDate, String> setDisponibiliteInitial() {
+	
+	/*public HashMap <LocalDate, String> setDisponibiliteInitial() {
 		LocalDate auj = LocalDate.now();
 		HashMap <LocalDate, String> ListeDisponibilite = new HashMap<LocalDate, String>();
 		ListeDisponibilite.put(auj, "Disponible");
@@ -147,10 +147,11 @@ public class Chambre {
 			ListeDisponibilite.put(auj.plusDays(i), "Disponible");
 		}
 		return ListeDisponibilite;
-	}
-	public ArrayList<LocalDate> getDateDisponible() {
+	} */
+	
+	/*public ArrayList<LocalDate> getDateDisponible() {
 		ArrayList<LocalDate> dateDisponible = new ArrayList<>();
-        HashMap <LocalDate, String> dicoDisponibilite= this.getDisponibilite();
+        List <LocalDate> dicoDisponibilite= this.getDateReservee();
 		for (Entry<LocalDate, String> iteDico: dicoDisponibilite.entrySet()) {
 			if (iteDico.getValue().equals("Disponible")){
 				dateDisponible.add(iteDico.getKey());
@@ -158,10 +159,11 @@ public class Chambre {
 		}
 		Collections.sort(dateDisponible); // Je voulais au départ faire une fonction de tri et j'ai realisé que c'était clairement pas nécessaire
 		return dateDisponible;
-	}
+	} */
+	
 	// A IMPLANTER: DEVOIR MODIFIER LES VALEURS DES DATES, POUR AVOIR DES DATES DISPONIBLE OU RESERVEE. (Possiblement modifier le String en boolean). 
 	// CREE UN TABLEAU DE DATE DISPONIBLE ORDONEE POUR L'AFFICHAGE.
-	public String stringDateDisponible() {
+	/*public String stringDateDisponible() {
 		ArrayList<LocalDate> listeDate = this.getDateDisponible();
 		String dateDispo ="";
 		for (int i = 0; i< listeDate.size(); i++) {
@@ -169,14 +171,15 @@ public class Chambre {
 			dateDispo = dateDispo+MDMethod.dateToFrenchString(dateTmp)+"\n";
 		}
 		return dateDispo;
-	}
+	} */
+	
 	public boolean testDisponible(LocalDate date) {
-		if (this.getDisponibilite().get(date).equals("Disponible")) {
-			return true;
+		if (this.getDateReservee().contains(date)) {
+			return false;
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}
 	

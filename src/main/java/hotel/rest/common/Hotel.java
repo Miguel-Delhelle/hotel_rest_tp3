@@ -127,14 +127,14 @@ public class Hotel{
 		String str ="";
 		Chambre tmpChambre = new Chambre();
 		for (int i = 0; i< this.getListeChambre().size();i++) {
-			if (this.getListeChambre().get(i).getDateDisponible().contains(uneDate) && !this.getListeChambre().get(i).equals(tmpChambre)){
+			if (!this.getListeChambre().get(i).getDateReservee().contains(uneDate)){
 				str = str+"\n"+this.getListeChambre().get(i).toString();
 				tmpChambre = this.getListeChambre().get(i);
 			}
 		}
 		return str+"\nDisponible le: "+ MDMethod.dateToFrenchString(uneDate);
 	}
-	public String listeChambreDisponible(LocalDate dateEntree, LocalDate dateSortie) {
+	/*public String listeChambreDisponible(LocalDate dateEntree, LocalDate dateSortie) {
 		String str ="";
 		Chambre tmpChambre = new Chambre();
 		LocalDate dateTmp = dateEntree;
@@ -156,9 +156,9 @@ public class Hotel{
 			return "Aucune date disponible à ce moment";
 		}
 		return str+"\nDisponible du: "+ MDMethod.dateToFrenchString(dateEntree)+" jusqu'au "+ MDMethod.dateToFrenchString(dateSortie);
-	}
+	} */
 	
-	public ArrayList<Chambre> listeChambreDisponible_ARRAYLIST(LocalDate dateEntree, LocalDate dateSortie) {
+	/*public ArrayList<Chambre> listeChambreDisponible_ARRAYLIST(LocalDate dateEntree, LocalDate dateSortie) {
 		String str ="";
 		Chambre tmpChambre = new Chambre();
 		LocalDate dateTmp = dateEntree;
@@ -180,7 +180,7 @@ public class Hotel{
 			return null;
 		}
 		return listeChambreDispo;
-	}
+	} */
 	
 	// Méthode Overridé
 	
@@ -213,7 +213,7 @@ public class Hotel{
 		ArrayList <LocalDate> arrayDateReservee = (ArrayList) reservation.getArrayDateReservee();
 		Chambre tmpChambre= new Chambre();
 		for (int i = 0; i< this.getListeChambre().size();i++) {
-			if (this.getListeChambre().get(i).getDateDisponible().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){
+			if (!this.getListeChambre().get(i).getDateReservee().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){
 				tmpChambre = this.getListeChambre().get(i);
 			}
 		}
@@ -240,7 +240,7 @@ public class Hotel{
 		ArrayList <LocalDate> arrayDateReservee = (ArrayList) traitementInfoDate.getArrayDateReservee();
 		Chambre tmpChambre= new Chambre();
 		for (int i = 0; i< this.getListeChambre().size();i++) {
-			if (this.getListeChambre().get(i).getDateDisponible().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){
+			if (!this.getListeChambre().get(i).getDateReservee().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){
 				tmpChambre = this.getListeChambre().get(i);
 				if (tmpChambre.getTypeChambre().equals(typeDeChambre)) {
 					return tmpChambre;
@@ -264,7 +264,7 @@ public class Hotel{
 		}
 		
 		for (int i = 0; i< this.getListeChambre().size();i++) {
-			if (this.getListeChambre().get(i).getDateDisponible().containsAll(arrayDateReservee) && 
+			if (!this.getListeChambre().get(i).getDateReservee().containsAll(arrayDateReservee) && 
 					!this.getListeChambre().get(i).equals(tmpChambre)){
 				str = str+"\n"+this.getListeChambre().get(i).toString()+"\n******************************";
 				tmpChambre = this.getListeChambre().get(i);

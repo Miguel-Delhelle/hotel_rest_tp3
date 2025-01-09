@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -144,17 +143,17 @@ public class Reservation { //Class associative
 		this.chambreReservee = chambreReservee;
 	}
 	public void setDateReservee(LocalDate dateReservee) {
-		HashMap <LocalDate, String> dicoDispo = this.chambreReservee.getDisponibilite();
-		if(dicoDispo.containsKey(dateReservee) && dicoDispo.get(dateReservee).equals("Disponible")){
-			this.chambreReservee.getDisponibilite().put(dateReservee, "Reservee");
+		List <LocalDate> dicoDispo = this.chambreReservee.getDateReservee();
+		if(!this.chambreReservee.getDateReservee().contains(dateReservee)){
+			this.chambreReservee.getDateReservee().add(dateReservee);
 		}
 		return ;
 	}
 	public void setDateReservee() {
-		HashMap <LocalDate, String> dicoDispo = this.chambreReservee.getDisponibilite();
+		List <LocalDate> dicoDispo = this.chambreReservee.getDateReservee();
 		for (int i = 0; i<this.dateReservee.size(); i++) {
-			if(dicoDispo.containsKey(this.getArrayDateReservee().get(i)) && dicoDispo.get(this.getArrayDateReservee().get(i)).equals("Disponible")){
-				this.getChambreReservee().getDisponibilite().put(getArrayDateReservee().get(i), "Reservée");
+			if(!dicoDispo.contains(this.getArrayDateReservee().get(i))){
+				this.getChambreReservee().getDateReservee().add(getArrayDateReservee().get(i));
 			}
 		}
 		return ;
