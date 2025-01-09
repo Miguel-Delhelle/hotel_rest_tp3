@@ -6,12 +6,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import hotel.rest.common.Hotel;
 import hotel.rest.common.MDMethod;
 import hotel.rest.common.Reservation;
 import hotel.rest.common.TypeChambre;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Chambre {
@@ -20,12 +25,18 @@ public class Chambre {
 	
 	@Id
 	@GeneratedValue
-	private int numeroChambre;
+	private long id;
 	private int nombreLit;
 	private double prix;
 	private TypeChambre typeChambre;
+	
+	@ManyToOne
+	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
+	
+	@Transient
 	private HashMap <LocalDate, String> disponibilite;
+	@OneToOne
 	private Reservation reservation;
 	
 	// Constructeurs
@@ -37,34 +48,34 @@ public class Chambre {
 		this.typeChambre = typeChambre;
 	}
 	
-	public Chambre(int numeroChambre, int nombreLit, double prix, Hotel hotel) {
+	public Chambre(long numeroChambre, int nombreLit, double prix, Hotel hotel) {
 		super();
-		this.numeroChambre = numeroChambre;
+		this.id = numeroChambre;
 		this.nombreLit = nombreLit;
 		this.prix = prix;
 		this.hotel = hotel;
 		this.disponibilite = this.setDisponibiliteInitial();
 		this.typeChambre = TypeChambre.SIMPLE;
 	}
-	public Chambre(int numeroChambre, int nombreLit, double prix, Hotel hotel, TypeChambre typeChambre) {
+	public Chambre(long numeroChambre, int nombreLit, double prix, Hotel hotel, TypeChambre typeChambre) {
 		super();
-		this.numeroChambre = numeroChambre;
+		this.id = numeroChambre;
 		this.nombreLit = nombreLit;
 		this.prix = prix;
 		this.hotel = hotel;
 		this.disponibilite = this.setDisponibiliteInitial();
 		this.typeChambre = typeChambre;
 	}
-	public Chambre(int numeroChambre, int nombreLit, double prix) {
+	public Chambre(long numeroChambre, int nombreLit, double prix) {
 		super();
-		this.numeroChambre = numeroChambre;
+		this.id = numeroChambre;
 		this.nombreLit = nombreLit;
 		this.prix = prix;
 		this.disponibilite = this.setDisponibiliteInitial();
 	}
-	public Chambre(int numeroChambre, Hotel hotel, TypeChambre typeChambre) {
+	public Chambre(long numeroChambre, Hotel hotel, TypeChambre typeChambre) {
 		super();
-		this.numeroChambre = numeroChambre;
+		this.id = numeroChambre;
 		this.nombreLit = typeChambre.getNombreLit();
 		this.prix = typeChambre.getPrix();
 		this.hotel = hotel;
@@ -77,11 +88,11 @@ public class Chambre {
 	}
 	// Accesseurs //
 	
-	public int getNumeroChambre() {
-		return numeroChambre;
+	public long getNumeroChambre() {
+		return id;
 	}
-	public void setNumeroChambre(int numeroChambre) {
-		this.numeroChambre = numeroChambre;
+	public void setNumeroChambre(long numeroChambre) {
+		this.id = numeroChambre;
 	}
 	public int getNombreLit() {
 		return nombreLit;

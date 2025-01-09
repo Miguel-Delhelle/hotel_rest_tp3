@@ -3,17 +3,28 @@ package hotel.rest.common;
 import java.time.LocalDate;
 
 import hotel.rest.models.Chambre;
-import hotel.rest.models.Hotel;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
+@Entity
 public class Personne {
 	
 	// Attributs//
-	private int id;
+	
+	@GeneratedValue
+	@Id
+	private long id;
 	private String prenom;
 	private String nom;
 	private Nationalite nationalite;
 	private int age;
+	
+	@OneToOne
 	private Adresse adressePersonne;
+	
+	@OneToOne
 	private Reservation reservation;
 	
 	// Constructeurs
@@ -46,7 +57,7 @@ public class Personne {
 	
 	//Accesseurs 
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -95,10 +106,10 @@ public class Personne {
 		Reservation nouvelleReservation = new Reservation (this, chambre, dateEntree, dateSortie);
 		this.reservation = nouvelleReservation;
 	}
-	public void setReservation(Hotel hotel, LocalDate dateEntree, LocalDate dateSortie) {
+	/*public void setReservation(Hotel hotel, LocalDate dateEntree, LocalDate dateSortie) {
 		Reservation nouvelleReservation = new Reservation (this, hotel, dateEntree, dateSortie);
 		this.reservation = nouvelleReservation;
-	}
+	} */
 	@Override
 	public String toString() {
 		return "Personne [prenom=" + prenom + ", nom=" + nom + ", nationalite=" + nationalite + ", age=" + age + "]";

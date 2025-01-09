@@ -3,19 +3,36 @@ package hotel.rest.common;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import hotel.rest.models.Chambre;
-import hotel.rest.models.Hotel;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
+@Entity
 public class Reservation { //Class associative
 
 	// Attributs
+	
+	@GeneratedValue
+	@Id
+	private long numeroReservation;
+	@OneToOne
 	private Personne client;
+	
+	@OneToOne
 	private Chambre chambreReservee;
+	
+	@ManyToOne
 	private Hotel hotelReservee;
 	private LocalDate dateEntree;
 	private LocalDate dateSortie;
-	private ArrayList<LocalDate> dateReservee = new ArrayList<>();
+	
+	private List<LocalDate> dateReservee = new ArrayList<LocalDate>();
 	
 	// Constructeurs
 	public Reservation(Personne client, Chambre chambreReservee) {
@@ -50,14 +67,14 @@ public class Reservation { //Class associative
 		this.dateSortie = dateSortie;
 		this.dateReservee = setArrayDateReservee();
 	}
-	public Reservation(Personne client, Chambre chambreReservee, ArrayList<LocalDate> dateReservee) {
+	public Reservation(Personne client, Chambre chambreReservee, List<LocalDate> dateReservee) {
 		super();
 		this.client = client;
 		this.chambreReservee = chambreReservee;
 		this.dateReservee = dateReservee;
 	}
 
-	public Reservation(Chambre chambreReservee, ArrayList<LocalDate> dateReservee) {
+	public Reservation(Chambre chambreReservee, List<LocalDate> dateReservee) {
 		super();
 		this.chambreReservee = chambreReservee;
 		this.dateReservee = dateReservee;
@@ -94,7 +111,7 @@ public class Reservation { //Class associative
 		}
 		return arrayDateReservee;
 	}
-	public ArrayList<LocalDate> getArrayDateReservee(){
+	public List<LocalDate> getArrayDateReservee(){
 		return this.dateReservee;
 	}
 
@@ -117,7 +134,7 @@ public class Reservation { //Class associative
 	public void setDateSortie(LocalDate dateSortie) {
 		this.dateSortie = dateSortie;
 	}
-	public ArrayList<LocalDate> getDateReservee() {
+	public List<LocalDate> getDateReservee() {
 		return dateReservee;
 	}
 	public void setDateReservee(ArrayList<LocalDate> dateReservee) {

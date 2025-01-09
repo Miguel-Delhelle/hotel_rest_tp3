@@ -1,7 +1,15 @@
 package hotel.rest.common;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Adresse {
 	
+	@GeneratedValue
+	@Id
+	private long id;
 	private String pays;
 	private String rue;
 	private String numero;

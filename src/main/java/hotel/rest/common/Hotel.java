@@ -1,32 +1,31 @@
-package hotel.rest.models;
+package hotel.rest.common;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import hotel.rest.common.Adresse;
-import hotel.rest.common.MDMethod;
-import hotel.rest.common.Personne;
-import hotel.rest.common.Reservation;
-import hotel.rest.common.TypeChambre;
 import hotel.rest.exception.ChambreNonDisponibleException;
 import hotel.rest.exception.ReservationFailedException;
+import hotel.rest.models.Chambre;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
-@Entity
 public class Hotel{
 	
 	// Attribut//
 	
 	@Id
-	@GeneratedValue
 	private long id;
 	private String nom;
+	@ManyToOne
 	private Adresse adresse;
 	private int nombreEtoile = 0;
-	private ArrayList <Chambre> listeChambre = new ArrayList <Chambre>();
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List <Chambre> listeChambre = new ArrayList <Chambre>();
 	
 	// Constructeur
 	
@@ -89,7 +88,7 @@ public class Hotel{
 	public void setNombreEtoile(int nombreEtoile) {
 		this.nombreEtoile = nombreEtoile;
 	}
-	public ArrayList<Chambre> getListeChambre() {
+	public List<Chambre> getListeChambre() {
 		return listeChambre;
 	}
 	/*public Chambre getChambreDispo(LocalDate date) {
@@ -210,7 +209,7 @@ public class Hotel{
 	// Web Methode
 	
 	public Chambre getChambreDisponible(Reservation reservation) {
-		ArrayList <LocalDate> arrayDateReservee = reservation.getArrayDateReservee();
+		ArrayList <LocalDate> arrayDateReservee = (ArrayList) reservation.getArrayDateReservee();
 		Chambre tmpChambre= new Chambre();
 		for (int i = 0; i< this.getListeChambre().size();i++) {
 			if (this.getListeChambre().get(i).getDateDisponible().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){
@@ -237,7 +236,7 @@ public class Hotel{
 
 	public Chambre getChambreDisponible(LocalDate dateEntree, LocalDate dateSortie, TypeChambre typeDeChambre) throws ChambreNonDisponibleException {
 		Reservation traitementInfoDate = new Reservation(dateEntree,dateSortie);
-		ArrayList <LocalDate> arrayDateReservee = traitementInfoDate.getArrayDateReservee();
+		ArrayList <LocalDate> arrayDateReservee = (ArrayList) traitementInfoDate.getArrayDateReservee();
 		Chambre tmpChambre= new Chambre();
 		for (int i = 0; i< this.getListeChambre().size();i++) {
 			if (this.getListeChambre().get(i).getDateDisponible().containsAll(arrayDateReservee) && !this.getListeChambre().get(i).equals(tmpChambre)){

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import hotel.rest.models.Chambre;
 
-public interface ChambreRepository extends JpaRepository<Chambre, Integer> {
+public interface ChambreRepository extends JpaRepository<Chambre, Long> {
 
 }
