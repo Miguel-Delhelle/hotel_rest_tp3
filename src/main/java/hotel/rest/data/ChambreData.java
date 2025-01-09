@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import hotel.rest.common.Hotel;
 import hotel.rest.common.TypeChambre;
 import hotel.rest.models.Chambre;
 import hotel.rest.repositories.ChambreRepository;
@@ -13,6 +14,11 @@ import hotel.rest.repositories.ChambreRepository;
 public class ChambreData {
 
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(ChambreData.class);
+	private Hotel hotel = new Hotel();
+	
+	public void initHotel() {
+		
+	}
 	
 	@Bean
 	public CommandLineRunner initDatabase(ChambreRepository repository) {
