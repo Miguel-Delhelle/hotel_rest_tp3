@@ -14,7 +14,7 @@ import hotel.rest.repositories.HotelRepository;
 public class HotelData {
 
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(HotelData.class);
-	//private Hotel hotel = initHotel();
+	private Hotel hotel;
 	
 	public Hotel initHotel() {
 		Adresse adresseHotel = new Adresse ("1", "Avenue des champs élysée","75008","Paris","France");
@@ -32,9 +32,13 @@ public class HotelData {
 			Hotel leParisien = initHotel();
 			logger.info("Préchargement de la base de donnée avec"+ repository.save(
 					leParisien));
+			this.hotel = leParisien;
 		};
 	}
 	
+	public Hotel getHotel() {
+		return this.hotel;
+	}
 	/*@Bean
 	public CommandLineRunner initDatabaseChambre(ChambreRepository repository) {
 		return args -> {

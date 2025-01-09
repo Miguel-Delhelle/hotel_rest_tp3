@@ -1,6 +1,8 @@
 package hotel.rest.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +10,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hotel.rest.common.MDMethod;
 import hotel.rest.exception.ChambreNonDisponibleException;
 import hotel.rest.exception.ReservationFailedException;
 import hotel.rest.models.Chambre;
+import hotel.rest.models.Hotel;
+import hotel.rest.models.Personne;
+import hotel.rest.models.Reservation;
+import hotel.rest.models.TypeChambre;
+import hotel.rest.repositories.AdresseRepository;
 import hotel.rest.repositories.ChambreRepository;
+import hotel.rest.repositories.HotelRepository;
+import hotel.rest.repositories.PersonneRepository;
+import hotel.rest.repositories.ReservationRepository;
 
 @RestController
 @RequestMapping("/Hotel")
@@ -19,16 +30,33 @@ public class Controller {
 
 	@Autowired
 	private ChambreRepository ChambreRepository;
+	private HotelRepository hotelRepository;
+	private AdresseRepository adresseRepository;
+	private PersonneRepository personneRepository;
+	private ReservationRepository reservationRepository;
+
 	
 	@GetMapping("/chambre")
 	public List<Chambre> getAllChambre(){
 		return ChambreRepository.findAll();
 	}
 	
-	/*@PostMapping
-	public void setReservation(String dateEntree, String dateSortie, String typeDeChambre) throws ReservationFailedException, ChambreNonDisponibleException {
+	@PostMapping("/reservation")
+	public void setReservation(String strDateEntree, String strDateSortie, String strTypeDeChambre) throws ReservationFailedException, ChambreNonDisponibleException {
+		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)1);
+		Hotel hotel = OptionnalHotel.get();
+
+		TypeChambre typeDeChambre = TypeChambre.valueOf(strTypeDeChambre);
+		LocalDate dateEntree = MDMethod.strToDat(strDateEntree);
+		LocalDate dateSortie = MDMethod.strToDat(strDateSortie);
+		Personne client = new Personne();
+		Reservation reservation = new Reservation(client,hotel.getChambreDisponible(dateEntree, dateSortie, typeDeChambre),dateEntree,dateSortie);
+		reservationRepository.save(reservation);
+		System.out.println(reservation.toString());
+		System.out.println(reservation.afficherConfirmation()); 
 		
-	} */
+	
+	}
 	
 	/*public String afficherHotel();
 	
