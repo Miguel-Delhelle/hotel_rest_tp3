@@ -197,8 +197,7 @@ public class Chambre {
 		return false;
 	}
 	public boolean equals(Chambre chambre2){
-		if ((this.getNombreLit() == chambre2.getNombreLit()) && (this.getPrix() == chambre2.getPrix() && (this.getHotel().equals(chambre2.getHotel()))) 
-				&& (this.getHotel().equals(chambre2.getHotel()))){
+		if ((this.getNombreLit() == chambre2.getNombreLit()) && (this.getPrix() == chambre2.getPrix())){
 			return true;
 		}
 		return false;

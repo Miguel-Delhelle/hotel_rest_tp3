@@ -1,0 +1,1 @@
+package hotel.rest.data.request;

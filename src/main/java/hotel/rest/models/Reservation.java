@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hotel.rest.common.MDMethod;
+import hotel.rest.main.HotelRestTp3Application;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Reservation { //Class associative
@@ -29,8 +30,10 @@ public class Reservation { //Class associative
 	@JoinColumn(name = "chambre_id")
 	private Chambre chambreReservee;
 	
-	@ManyToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "hotel_id")
+	//@ManyToOne (cascade = CascadeType.ALL)
+	//@JoinColumn(name = "hotel_id")
+	
+	@Transient
 	private Hotel hotelReservee;
 	private LocalDate dateEntree;
 	private LocalDate dateSortie;
@@ -171,9 +174,7 @@ public class Reservation { //Class associative
 		return this.getChambreReservee().getPrix()*(this.getArrayDateReservee().size()+1);
 	}
 	public String afficherConfirmation() {
-		return "Vous avez bien réservée à l'hotel \""+this.getHotelReservee().getNom()+
-				"\" au "+this.getHotelReservee().getAdresse().toString()+
-				" du "+MDMethod.dateToFrenchString(this.getDateEntree())+" jusqu'au "+MDMethod.dateToFrenchString(this.getDateSortie())
+		return "Vous avez bien réservée du "+MDMethod.dateToFrenchString(this.getDateEntree())+" jusqu'au "+MDMethod.dateToFrenchString(this.getDateSortie())
 				+" au prix de "+this.coutReservation();
 	}
 	
