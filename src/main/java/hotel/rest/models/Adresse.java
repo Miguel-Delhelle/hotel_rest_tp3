@@ -1,4 +1,4 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +23,9 @@ public class Adresse {
 		this.numero = numero;
 		this.codePostal = codePostal;
 		this.ville = ville;
+	}
+	public Adresse() {
+		
 	}
 	
 	// Accesseurs

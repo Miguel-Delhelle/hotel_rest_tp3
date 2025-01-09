@@ -1,16 +1,16 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import hotel.rest.common.MDMethod;
 import hotel.rest.exception.ChambreNonDisponibleException;
 import hotel.rest.exception.ReservationFailedException;
-import hotel.rest.models.Chambre;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -22,10 +22,13 @@ public class Hotel{
 	@Id
 	private long id;
 	private String nom;
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "adresse_id")
 	private Adresse adresse;
 	private int nombreEtoile = 0;
-	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	
+	@OneToMany (cascade = CascadeType.ALL)
+	@JoinColumn(name = "chambre_id")
 	private List <Chambre> listeChambre = new ArrayList <Chambre>();
 	
 	// Constructeur
@@ -116,7 +119,7 @@ public class Hotel{
 	public void generateurChambre(int nbrChambre,TypeChambre typeChambre) {
 		ArrayList <Chambre> listeChambre = new ArrayList<>();
 		for (int i =0; i < nbrChambre; i++) {
-			Chambre tmpChambre = new Chambre(i+1+this.getListeChambre().size(),this, typeChambre);
+			Chambre tmpChambre = new Chambre(this, typeChambre);
 			listeChambre.add(tmpChambre);
 		}
 		this.getListeChambre().addAll(listeChambre);

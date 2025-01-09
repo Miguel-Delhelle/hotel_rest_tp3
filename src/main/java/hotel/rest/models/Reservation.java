@@ -1,14 +1,15 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import hotel.rest.models.Chambre;
+import hotel.rest.common.MDMethod;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
@@ -20,13 +21,16 @@ public class Reservation { //Class associative
 	@GeneratedValue
 	@Id
 	private long numeroReservation;
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "personne_id")
 	private Personne client;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "chambre_id")
 	private Chambre chambreReservee;
 	
-	@ManyToOne
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "hotel_id")
 	private Hotel hotelReservee;
 	private LocalDate dateEntree;
 	private LocalDate dateSortie;

@@ -1,11 +1,14 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 import java.time.LocalDate;
 
-import hotel.rest.models.Chambre;
+import hotel.rest.common.MDMethod;
+import hotel.rest.common.Nationalite;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -21,10 +24,12 @@ public class Personne {
 	private Nationalite nationalite;
 	private int age;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "adresse_id")
 	private Adresse adressePersonne;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "reservation_id")
 	private Reservation reservation;
 	
 	// Constructeurs

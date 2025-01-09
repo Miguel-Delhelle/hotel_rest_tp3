@@ -1,4 +1,4 @@
-package hotel.rest.common;
+package hotel.rest.models;
 
 public enum TypeChambre {
 

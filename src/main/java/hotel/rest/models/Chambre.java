@@ -2,16 +2,10 @@ package hotel.rest.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
-import hotel.rest.common.Hotel;
-import hotel.rest.common.MDMethod;
-import hotel.rest.common.Reservation;
-import hotel.rest.common.TypeChambre;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -30,8 +24,8 @@ public class Chambre {
 	private double prix;
 	private TypeChambre typeChambre;
 	
-	@ManyToOne
-	@JoinColumn(name = "hotel_id")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
 	private Hotel hotel;
 	
 	private List <LocalDate> dateReservee = new ArrayList <LocalDate>();
@@ -76,6 +70,14 @@ public class Chambre {
 	public Chambre(long numeroChambre, Hotel hotel, TypeChambre typeChambre) {
 		super();
 		this.id = numeroChambre;
+		this.nombreLit = typeChambre.getNombreLit();
+		this.prix = typeChambre.getPrix();
+		this.hotel = hotel;
+		// this.dateReservee = this.setDisponibiliteInitial();
+		this.typeChambre = typeChambre;
+	}
+	public Chambre(Hotel hotel, TypeChambre typeChambre) {
+		super();
 		this.nombreLit = typeChambre.getNombreLit();
 		this.prix = typeChambre.getPrix();
 		this.hotel = hotel;
