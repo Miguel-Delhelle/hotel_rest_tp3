@@ -71,6 +71,7 @@ public class Controller {
 		System.out.println(reservation.toString());
 		System.out.println(reservation.afficherConfirmation()); 
 		
+		
 	
 	}
 	
