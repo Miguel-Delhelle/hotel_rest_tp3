@@ -52,9 +52,9 @@ public abstract class MDMethod{
 	
 	public static LocalDate strToDat(String strDate) {
 		String[] date = strDate.split("-");
-		int jour = Integer.parseInt(date[2]);
+		int jour = Integer.parseInt(date[0]);
 		int mois = Integer.parseInt(date[1]);
-		int annee = Integer.parseInt(date[0]);
+		int annee = Integer.parseInt(date[2]);
 		
 		LocalDate localDate = LocalDate.of(annee, mois, jour);
 		

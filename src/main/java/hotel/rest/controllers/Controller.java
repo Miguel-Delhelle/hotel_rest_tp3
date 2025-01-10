@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hotel.rest.data.request.ReservationRequest;
 import hotel.rest.exception.ChambreNonDisponibleException;
-import hotel.rest.exception.ReservationFailedException;
 import hotel.rest.models.Chambre;
 import hotel.rest.models.Hotel;
 import hotel.rest.models.Personne;
@@ -55,23 +55,30 @@ public class Controller {
 	}
 	
 	@PostMapping("/reservation")
-	public ResponseEntity<String> setReservation( @RequestBody ReservationRequest requete) 
-					throws ReservationFailedException, ChambreNonDisponibleException {
+	public ResponseEntity<String> setReservation( @RequestBody ReservationRequest requete) {
+		try {
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
-
+		
 		TypeChambre typeDeChambre = requete.getTypeDeChambre();
 		System.err.println(typeDeChambre.toString());
 		LocalDate dateEntree = requete.getDateEntree();
 		LocalDate dateSortie = requete.getDateSortie();
 		Personne client = new Personne();
 		//Chambre chambreReservee = hotel.getChambreDisponible(dateEntree, dateSortie, typeDeChambre);
-		Reservation reservation = new Reservation(client,hotel.getChambreDisponible(dateEntree, dateSortie, typeDeChambre),dateEntree,dateSortie);
-		reservationRepository.save(reservation);
-		System.out.println(reservation.toString());
-		System.out.println(reservation.afficherConfirmation()); 
+		Reservation reservation;
 		
-        return ResponseEntity.ok("Reservation effectué: " + reservation.afficherConfirmation());
+			reservation = new Reservation(client,hotel.getChambreDisponible(dateEntree, dateSortie, typeDeChambre),dateEntree,dateSortie);
+			reservationRepository.save(reservation);
+			System.out.println(reservation.toString());
+			System.out.println(reservation.afficherConfirmation()); 
+			
+	        return ResponseEntity.ok("Reservation effectué: " + reservation.afficherConfirmation());
+		} catch (ChambreNonDisponibleException e) {
+			// TODO Auto-generated catch block
+	        return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette chambre n'est plus disponible");
+		}
+
 		
 		
 	
