@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hotel.rest.common.MDMethod;
 import hotel.rest.data.request.ReservationRequest;
 import hotel.rest.exception.ChambreNonDisponibleException;
 import hotel.rest.exception.ReservationFailedException;
@@ -55,7 +55,7 @@ public class Controller {
 	}
 	
 	@PostMapping("/reservation")
-	public void setReservation( @RequestBody ReservationRequest requete) 
+	public ResponseEntity<String> setReservation( @RequestBody ReservationRequest requete) 
 					throws ReservationFailedException, ChambreNonDisponibleException {
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
@@ -70,6 +70,8 @@ public class Controller {
 		reservationRepository.save(reservation);
 		System.out.println(reservation.toString());
 		System.out.println(reservation.afficherConfirmation()); 
+		
+        return ResponseEntity.ok("Reservation effectué: " + reservation.afficherConfirmation());
 		
 		
 	
