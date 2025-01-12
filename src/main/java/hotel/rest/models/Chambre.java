@@ -4,9 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 
@@ -30,8 +33,9 @@ public class Chambre {
 	
 	private List <LocalDate> dateReservee = new ArrayList <LocalDate>();
 	
-	@OneToOne
-	private Reservation reservation;
+	@OneToMany (cascade = CascadeType.ALL)
+	@JoinColumn(name = "reservation_id")
+	private List<Reservation> reservation;
 	
 	// Constructeurs
 	
@@ -115,11 +119,11 @@ public class Chambre {
 		this.hotel = hotel;
 	}
 	
-	public Reservation getReservation() {
+	public List<Reservation> getReservation() {
 		return reservation;
 	}
 	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
+		this.reservation.add(reservation);
 	}
 	public void setDisponibilite(List<LocalDate> disponibilite) {
 		this.dateReservee = disponibilite;

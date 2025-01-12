@@ -1,6 +1,7 @@
 package hotel.rest.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hotel.rest.data.request.ReservationRequest;
 import hotel.rest.exception.ChambreNonDisponibleException;
+import hotel.rest.models.Adresse;
 import hotel.rest.models.Chambre;
 import hotel.rest.models.Hotel;
 import hotel.rest.models.Personne;
@@ -43,15 +45,15 @@ public class Controller {
 
 	
 	@GetMapping("/chambre")
-	public List<Chambre> getAllChambre(){
-		return ChambreRepository.findAll();
+	public ResponseEntity<List<Chambre>> getAllChambre(){
+		return ResponseEntity.ok(ChambreRepository.findAll());
 	}
 	
 	@GetMapping("/hotel")
-	public Hotel getHotel(){
+	public ResponseEntity<Hotel> getHotel(){
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
-		return hotel;
+		return ResponseEntity.ok(hotel);
 	}
 	
 	@PostMapping("/reservation")
@@ -78,22 +80,37 @@ public class Controller {
 			// TODO Auto-generated catch block
 	        return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette chambre n'est plus disponible");
 		}
-
-		
-		
-	
 	}
 	
-	/*public String afficherHotel();
 	
-	public String listeChambreDisponibleToString(String strDateEntree, String strDateSortie);
-		
-	public String afficherNomHotel();
-		
-	public List<TypeChambre> listeTypeChambre();
+	@GetMapping("/nameHotel")
+	public ResponseEntity<String> afficherHotel() {
+		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
+		Hotel hotel = OptionnalHotel.get();
+		return ResponseEntity.ok(hotel.getNom());
+	}
+	
+	@GetMapping("/adress")
+	public ResponseEntity<Adresse> adresseHotel() {
+		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
+		Hotel hotel = OptionnalHotel.get();
+		return ResponseEntity.ok(hotel.getAdresse());
+	}
+			
+	@GetMapping("/chambre/type")
+	public ResponseEntity<List<TypeChambre>> listeTypeChambre(){
+		List<Chambre> listeChambre = ChambreRepository.findAll();
+		List<TypeChambre> listeTypeChambre = new ArrayList<TypeChambre>();
+		for (Chambre chambreTmp : listeChambre) {
+			if (!listeTypeChambre.contains(chambreTmp.getTypeChambre())) {
+				listeTypeChambre.add(chambreTmp.getTypeChambre());
+			}
+		}
+		return ResponseEntity.ok(listeTypeChambre);
+	}
 	
 	
-	
+	/*
 	public void setReservationAuth(Personne clientAuth) {
 	} */
 }

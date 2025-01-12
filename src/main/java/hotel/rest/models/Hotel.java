@@ -11,8 +11,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Hotel{
@@ -22,7 +22,7 @@ public class Hotel{
 	@Id
 	private long id;
 	private String nom;
-	@ManyToOne (cascade = CascadeType.ALL)
+	@OneToOne (cascade = CascadeType.ALL)
 	@JoinColumn(name = "adresse_id")
 	private Adresse adresse;
 	private int nombreEtoile = 0;
