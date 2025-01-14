@@ -1,12 +1,19 @@
 package hotel.rest.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +64,7 @@ public class Controller {
 	}
 	
 	@PostMapping("/reservation")
-	public ResponseEntity<String> setReservation( @RequestBody ReservationRequest requete) {
+	public ResponseEntity<String> setReservation(@RequestBody ReservationRequest requete) {
 		try {
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
@@ -109,8 +116,16 @@ public class Controller {
 		return ResponseEntity.ok(listeTypeChambre);
 	}
 	
-	
-	/*
-	public void setReservationAuth(Personne clientAuth) {
-	} */
+	@GetMapping("/presentation")
+    public ResponseEntity<Resource> getVueSurTourEiffel() throws IOException {
+
+	String pathStr = "src/main/resources/image/hotelParis.jpeg";
+    Path path = Paths.get(pathStr);
+    Resource ressource = new UrlResource(path.toUri());
+    String contentType = Files.probeContentType(path);
+    	
+    return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(ressource);
+    }
+
+
 }
