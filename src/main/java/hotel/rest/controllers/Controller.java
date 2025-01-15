@@ -60,6 +60,7 @@ public class Controller {
 	public ResponseEntity<Hotel> getHotel(){
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
+		
 		return ResponseEntity.ok(hotel);
 	}
 	
