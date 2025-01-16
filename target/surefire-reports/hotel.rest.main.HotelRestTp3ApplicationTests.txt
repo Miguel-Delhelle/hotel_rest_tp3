@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: hotel.rest.main.HotelRestTp3ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.42 s -- in hotel.rest.main.HotelRestTp3ApplicationTests

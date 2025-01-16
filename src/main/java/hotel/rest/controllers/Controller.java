@@ -71,7 +71,7 @@ public class Controller {
 		Optional<Hotel> OptionnalHotel = hotelRepository.findById((long)0);
 		Hotel hotel = OptionnalHotel.get();
 		
-		TypeChambre typeDeChambre = requete.getTypeDeChambre();
+		TypeChambre typeDeChambre = TypeChambre.valueOf(requete.getTypeDeChambre());
 		System.err.println(typeDeChambre.toString());
 		LocalDate dateEntree = requete.getDateEntree();
 		LocalDate dateSortie = requete.getDateSortie();

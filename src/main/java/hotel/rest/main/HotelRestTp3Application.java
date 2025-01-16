@@ -21,7 +21,6 @@ import hotel.rest.models.Hotel;
 		})
 public class HotelRestTp3Application {
 
-	private Hotel mainHotel = new HotelData().getHotel();
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HotelRestTp3Application.class, args);
@@ -29,15 +28,6 @@ public class HotelRestTp3Application {
 	}
 
 	
-	
-	public HotelRestTp3Application() {
-		
-	}
-
-	public Hotel getMainHotel() {
-		return mainHotel;
-	}
-
 	
 	
 }

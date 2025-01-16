@@ -28,7 +28,7 @@ public class ReservationRequest {
 	public void setDateSortie(String dateSortie) {
 		this.dateSortie = dateSortie;
 	}
-	public String getTypeDeChambreStr() {
+	public String getTypeDeChambre() {
 		return typeDeChambre;
 	}
 	public void setTypeDeChambre(String typeDeChambre) {
@@ -45,9 +45,9 @@ public class ReservationRequest {
 		return MDMethod.strToDat(dateSortie);
 	}
 	
-	public TypeChambre getTypeDeChambre() {
+	/*public TypeChambre getTypeDeChambre() {
 		return TypeChambre.valueOf(this.typeDeChambre);
-	}
+	} */
 	
 	
 }
